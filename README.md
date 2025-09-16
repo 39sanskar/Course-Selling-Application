@@ -20,18 +20,19 @@
 - Redux / Context API (state management)
 - TailwindCSS / Material UI
 
-### Backend:
+#### Backend:
 - Node.js
 - Express.js
 
-### Database:
+#### Database:
 - MongoDB with Mongoose ORM
 
-### Other Tools:
+#### Other Tools:
 - JWT Authentication
 - Stripe / Razorpay / PayPal Integration
 
 
+### Project Structure:
 ```text
 Course-Selling-Application/
 │── backend/                   # Backend (Node.js + Express)
