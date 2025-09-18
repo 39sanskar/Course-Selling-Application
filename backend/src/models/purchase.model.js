@@ -1,25 +1,37 @@
 import mongoose from "mongoose";
 
-const purchaseSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  courseId: { type: mongoose.Schema.Types.ObjectId, ref: "Course", required: true },
-  orderId: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
-  purchaseDate: { type: Date, default: Date.now },
-  paymentMethod: {
-    type: String,
-    enum: ["credit_card", "debit_card", "upi", "paypal", "stripe", "razorpay"],
+const purchaseSchema = new mongoose.Schema(
+  {
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    courseId: { type: mongoose.Schema.Types.ObjectId, ref: "Course", required: true },
+    orderId: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
+
+    purchaseDate: { type: Date, default: Date.now },
+
+    paymentMethod: {
+      type: String,
+      enum: ["credit_card", "debit_card", "upi", "paypal", "stripe", "razorpay"],
+      required: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["pending", "success", "failed"],
+      default: "pending",
+    },
+
+    amount: { type: Number, required: true }, // stored in INR
+
+    // Learning progress tracking
+    progress: { type: Number, default: 0, min: 0, max: 100 },
+    isCompleted: { type: Boolean, default: false },
+    completedAt: { type: Date },
+
+    // Certificate
+    certificateUrl: { type: String },
   },
-
-  // Learning progress tracking
-  progress: { type: Number, default: 0, min: 0, max: 100 }, 
-  completedLessons: [{ type: mongoose.Schema.Types.ObjectId }],
-  lastAccessedLesson: { type: mongoose.Schema.Types.ObjectId }, 
-  isCompleted: { type: Boolean, default: false },
-  completedAt: { type: Date },
-
-  // Certificate
-  certificateUrl: { type: String },
-}, { timestamps: true });
+  { timestamps: true }
+);
 
 // Prevent duplicate purchases
 purchaseSchema.index({ userId: 1, courseId: 1 }, { unique: true });
