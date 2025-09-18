@@ -41,6 +41,8 @@ purchaseSchema.pre("save", function (next) {
   if (this.progress === 100 && !this.isCompleted) {
     this.isCompleted = true;
     this.completedAt = new Date();
+    // Placeholder: generate certificate URL here if needed
+    // this.certificateUrl = generateCertificateUrl(this.userId, this.courseId);
   }
   next();
 });
